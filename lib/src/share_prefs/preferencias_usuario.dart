@@ -52,4 +52,14 @@ class PreferenciasUsario {
     _prefs.setString('nombreUsuario', value);
   }
 
+  //GET y SET del ultimaPagina
+
+  get ultimaPagina {
+    return _prefs.getString('ultimaPagina') ?? 'home';
+  }
+
+  set ultimaPagina(String value) {
+    _prefs.setString('ultimaPagina', value);
+  }
+
 }

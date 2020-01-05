@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:preferenciasusuarioapp/src/share_prefs/preferencias_usuario.dart';
 import 'package:preferenciasusuarioapp/widgets/menu_widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   static final String routeName = 'settings';
@@ -22,6 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+    prefs.ultimaPagina = SettingsPage.routeName;
     _genero = prefs.genero;
     _colorSecundario = prefs.colorSecundario;
     _textController = new TextEditingController(text: prefs.nombreUsuario);

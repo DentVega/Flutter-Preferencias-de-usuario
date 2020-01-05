@@ -12,6 +12,9 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
+
+  final prefs = new PreferenciasUsario();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: HomePage.routeName,
+      initialRoute: prefs.ultimaPagina,
       routes: {
         HomePage.routeName: (BuildContext context) => HomePage(),
         SettingsPage.routeName: (BuildContext context) => SettingsPage(),
