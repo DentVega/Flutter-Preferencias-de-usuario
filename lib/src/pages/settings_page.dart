@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:preferenciasusuarioapp/src/share_prefs/preferencias_usuario.dart';
 import 'package:preferenciasusuarioapp/widgets/menu_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,30 +12,23 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
 
-  bool _colorSecundario = false;
-  int _genero = 1;
+  bool _colorSecundario;
+  int _genero;
   String _nombre = 'Brian';
 
   TextEditingController _textController;
+  final prefs = new PreferenciasUsario();
 
   @override
   void initState() {
     super.initState();
-    cargarPref();
-    _textController = new TextEditingController(text: _nombre);
+    _genero = prefs.genero;
+    _colorSecundario = prefs.colorSecundario;
+    _textController = new TextEditingController(text: prefs.nombreUsuario);
   }
 
-  cargarPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _genero = prefs.getInt('genero');
-    setState(() {});
-  }
-
-  _setSelectedRadio(int valor) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    await prefs.setInt('genero', valor);
-
+  _setSelectedRadio(int valor) {
+    prefs.genero = valor;
     _genero = valor;
     setState(() {});
   }
@@ -44,6 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ajustes'),
+        backgroundColor: (prefs.colorSecundario) ? Colors.teal : Colors.blue,
       ),
       drawer: MenuWidget(),
       body: ListView(
@@ -62,6 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onChanged: (value) {
                 setState(() {
                   _colorSecundario = value;
+                  prefs.colorSecundario = value;
                 });
               }),
           RadioListTile(
@@ -86,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   helperText: 'Nombre de la persona usando la app'),
               onChanged: (value) {
                 setState(() {
-                  _nombre = value;
+                  prefs.nombreUsuario = value;
                 });
               },
             ),
